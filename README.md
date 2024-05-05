@@ -1,4 +1,4 @@
-# ConsoleAddon
+# Console and Textchat Addon
  
 ## Purpose
 
