@@ -3,7 +3,7 @@ extends EditorPlugin
 
 
 func _enter_tree() -> void:
-	add_custom_type("ConsoleAndTextchat", "Panel", load("res://private_console.gd"), load("res://icon.svg"))
+	add_custom_type("ConsoleAndTextchat", "Panel", load("res://addons/console_and_textchat/console.gd"), load("res://addons/console_and_textchat/node_icon.png"))
 
 
 

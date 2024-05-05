@@ -22,6 +22,7 @@ var all_commands: Array[Dictionary] = []
 ####################################################################################################
 ## STARTUP ##
 
+
 func _ready():
 	_build_console()
 	set("minimum_size", size)
