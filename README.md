@@ -35,46 +35,46 @@ The entered arguments are given to the method that was registered to a given com
 
 ### Build in commands
 
-* help 
+* help\
 	Displays all registered commands.
 
-* toggle_console
+* toggle_console\
 	Used to toggle the console. The console can also be toggled using the "K" key.
 
-* clear
+* clear\
 	Used to clear the console of all text.
 
 ### Methods
 
-* void		print_message(text: String)
+* void		print_message(text: String)\
 	Main method to print a message to the console/textchat. The `text` string can be customized using the different text formatting methods.
 	Text formatting can be achieved with bbcode.
 	
-* void		register_command(command_name: String, function: Callable, arguments: bool = true)
+* void		register_command(command_name: String, function: Callable, arguments: bool = true)\
 	Register a command to be used through the console. The `command_name` is written into the console.
 	The `function` is a Callable that is called when the `command_name` is entered into the console.
 	If the ´function´ has no arguments set ´arguments´ to ´false´.
 
-* void		delete_command(command_name: String)
+* void		delete_command(command_name: String)\
 	Deletes a registered command.
 
-* void		clear_console()
+* void		clear_console()\
 	Deletes all entered Text.
 
-* String	timestamp()
+* String	timestamp()\
 	Return the current system time in the form [h:min].
 
-* String	col(color, text: String)
+* String	col(color, text: String)\
 	To color a ´text´ insert ´color´ as a ´Color´ type or as a string that represents a html/hex color code in the form #xxxxxx.
 
-* String	bold(text: String)
+* String	bold(text: String)\
 	To print a ´text´ in bold.
 
-* String	italic(text: String)
+* String	italic(text: String)\
 	To print a ´text´ in italic.
 
-* String	underline(text: String)
+* String	underline(text: String)\
 	To print a underlined ´text´.
 
-* String	crossed(text: String)
+* String	crossed(text: String)\
 	To print a crossed ´text´. 
