@@ -7,10 +7,8 @@
 script = ExtResource("1_ivaq7")
 
 [node name="ConsoleAndTextchat" type="Panel" parent="."]
-offset_left = 45.0
-offset_top = 41.0
-offset_right = 345.0
-offset_bottom = 376.0
+offset_right = 300.0
+offset_bottom = 335.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_we1j5")
