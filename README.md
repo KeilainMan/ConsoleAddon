@@ -5,6 +5,8 @@
 This addon includes a custom node which can represent a console and textchat. 
 You can print messages in game to the console to help you debug or register commands for debugging.
 
+![Demo 2](https://raw.githubusercontent.com/Mike-Bros/ConsoleAddon/main/screenshots/demo2.png)
+
 ## Installation
 
 [Install via Godot AssetLib](https://godotengine.org/asset-library/asset/2946) and enable plugin in project settings.
@@ -15,11 +17,13 @@ See [Installing a plugin](https://docs.godotengine.org/en/stable/tutorials/plugi
 
 Add the "ConsoleAndTextchat" node to your scene tree. Adjust positioning and size in the scene.
 
+![Scene Tree](https://raw.githubusercontent.com/Mike-Bros/ConsoleAddon/main/screenshots/Scene_tree.PNG)
+
 ### Printing messages to the console 
 
 To print messages use the `node.print_message(text: String)` method. Insert the string you want to be printed.
 You can customize the message using different colors and text formatting or add a timestamp. To see how you 
-customize your message look in the demo scene and method documentation.
+customize your message look in the demo and demo2 scenes for examples.
 
 ### Commands
 
