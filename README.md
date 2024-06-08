@@ -5,19 +5,25 @@
 This addon includes a custom node which can represent a console and textchat. 
 You can print messages in game to the console to help you debug or register commands for debugging.
 
+![Demo 2](https://raw.githubusercontent.com/Mike-Bros/ConsoleAddon/main/screenshots/demo2.png)
+
 ## Installation
 
-Install via Godot AssetLib and enable plugin in project settings.
+[Install via Godot AssetLib](https://godotengine.org/asset-library/asset/2946) and enable plugin in project settings.
+
+See [Installing a plugin](https://docs.godotengine.org/en/stable/tutorials/plugins/editor/installing_plugins.html#installing-a-plugin) from the Godot docs for further assistance.
 
 ## How to use
 
 Add the "ConsoleAndTextchat" node to your scene tree. Adjust positioning and size in the scene.
 
+![Scene Tree](https://raw.githubusercontent.com/Mike-Bros/ConsoleAddon/main/screenshots/Scene_tree.PNG)
+
 ### Printing messages to the console 
 
 To print messages use the `node.print_message(text: String)` method. Insert the string you want to be printed.
 You can customize the message using different colors and text formatting or add a timestamp. To see how you 
-customize your message look in the demo scene and method documentation.
+customize your message look in the demo and demo2 scenes for examples.
 
 ### Commands
 
@@ -30,7 +36,7 @@ wether the callback method has arguments attached.
 #### Calling commands
 
 Calling commands through the console is simple. Every command starts with "/" followed by the command itself. 
-Additionally every argument is entered with a space inbetween: "/say_hello_to player_one playert_wo".
+Additionally, every argument is entered with a space inbetween: "/say_hello_to player_one playert_wo".
 The entered arguments are given to the method that was registered to a given comment as an array of Strings `["player_one", "player_two"]`.
 
 ### Build in commands
@@ -43,6 +49,16 @@ The entered arguments are given to the method that was registered to a given com
 
 * clear\
 	Used to clear the console of all text.
+
+### History Navigation
+
+The console supports navigating command history using Shift + Arrow keys.
+
+* `Shift + Up Arrow`\
+  Navigate to the previous command.
+
+* `Shift + Down Arrow`\
+  Navigate to the next command.
 
 ### Methods
 
@@ -65,7 +81,7 @@ The entered arguments are given to the method that was registered to a given com
 	Return the current system time in the form [h:min].
 
 * String	`col(color, text: String)`\
-	To color a `text` insert `color` as a `Color` type or as a string that represents a html/hex color code in the form #xxxxxx.
+	To color a `text` insert `color` as a `Color` type or as a string that represents a html/hex color code in the form `#xxxxxx`.
 
 * String	`bold(text: String)`\
 	To print a `text` in bold.
@@ -78,3 +94,11 @@ The entered arguments are given to the method that was registered to a given com
 
 * String	`crossed(text: String)`\
 	To print a crossed `text`. 
+
+### Additional Features
+
+* `Themes`\
+  Customize the console appearance by using `cli_history_preview_theme` and `cli_history_default_theme`.
+
+* `disable_cli` and `disable_key_enter_focus`\
+  These options can disable the CLI or the focus behavior on pressing Enter.

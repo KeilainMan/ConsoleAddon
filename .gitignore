@@ -1,3 +1,10 @@
 # Godot 4+ specific ignores
 .godot/
 *.import
+
+# JetBrains Rider boilerplate
+.idea/
+*.ipr
+*.iws
+*.iml
+out/
