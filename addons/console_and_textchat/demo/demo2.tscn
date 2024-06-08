@@ -1,0 +1,134 @@
+[gd_scene load_steps=9 format=3 uid="uid://chdiv2yjxfywo"]
+
+[ext_resource type="Script" path="res://addons/console_and_textchat/demo/demo2.gd" id="1_bgeg0"]
+[ext_resource type="Script" path="res://addons/console_and_textchat/console.gd" id="2_8evco"]
+
+[sub_resource type="Theme" id="Theme_2lh5a"]
+LineEdit/colors/font_color = Color(0.980392, 0.501961, 0.447059, 1)
+LineEdit/colors/selection_color = Color(0.980392, 0.501961, 0.447059, 1)
+
+[sub_resource type="Theme" id="Theme_ft0af"]
+
+[sub_resource type="Theme" id="Theme_jiqs6"]
+LineEdit/colors/font_color = Color(0.980392, 0.501961, 0.447059, 1)
+LineEdit/colors/selection_color = Color(0.980392, 0.501961, 0.447059, 1)
+
+[sub_resource type="Theme" id="Theme_kduk3"]
+
+[sub_resource type="Theme" id="Theme_4atdj"]
+LineEdit/colors/font_color = Color(0.980392, 0.501961, 0.447059, 1)
+LineEdit/colors/selection_color = Color(0.980392, 0.501961, 0.447059, 1)
+
+[sub_resource type="Theme" id="Theme_1in1u"]
+
+[node name="Demo2" type="Node"]
+script = ExtResource("1_bgeg0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 455.0
+grow_horizontal = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="PrimaryToggle" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "PrimaryToggle"
+
+[node name="PrimaryToggleCLI" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "PrimaryToggleCLI"
+
+[node name="PrimaryClear" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "PrimaryClear"
+
+[node name="PrimaryConsole" type="Panel" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_8evco")
+minimum_size = Vector2(1004, 455)
+cli_history_preview_theme = SubResource("Theme_2lh5a")
+cli_history_default_theme = SubResource("Theme_ft0af")
+disable_cli = true
+disable_key_enter_focus = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -190.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Console2Toggle" type="Button" parent="HBoxContainer2/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Console2Toggle"
+
+[node name="Console2ToggleCLI" type="Button" parent="HBoxContainer2/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Console2ToggleCLI"
+
+[node name="Console2Clear" type="Button" parent="HBoxContainer2/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Console2Clear"
+
+[node name="Console2" type="Panel" parent="HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_8evco")
+minimum_size = Vector2(417, 190)
+cli_history_preview_theme = SubResource("Theme_jiqs6")
+cli_history_default_theme = SubResource("Theme_kduk3")
+disable_key_enter_focus = true
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Console3Toggle" type="Button" parent="HBoxContainer2/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Console3Toggle"
+
+[node name="Console3ToggleCLI" type="Button" parent="HBoxContainer2/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Console3ToggleCLI"
+
+[node name="Console3Clear" type="Button" parent="HBoxContainer2/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Console3Clear"
+
+[node name="Console3" type="Panel" parent="HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_8evco")
+minimum_size = Vector2(417, 190)
+cli_history_preview_theme = SubResource("Theme_4atdj")
+cli_history_default_theme = SubResource("Theme_1in1u")
+disable_key_enter_focus = true
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/PrimaryToggle" to="HBoxContainer/PrimaryConsole" method="_toggle_console_visibility"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/PrimaryToggleCLI" to="HBoxContainer/PrimaryConsole" method="_toggle_cli_visibility"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/PrimaryClear" to="HBoxContainer/PrimaryConsole" method="clear_console"]
+[connection signal="pressed" from="HBoxContainer2/HBoxContainer/VBoxContainer2/Console2Toggle" to="HBoxContainer2/HBoxContainer/Console2" method="_toggle_console_visibility"]
+[connection signal="pressed" from="HBoxContainer2/HBoxContainer/VBoxContainer2/Console2ToggleCLI" to="HBoxContainer2/HBoxContainer/Console2" method="_toggle_cli_visibility"]
+[connection signal="pressed" from="HBoxContainer2/HBoxContainer/VBoxContainer2/Console2Clear" to="HBoxContainer2/HBoxContainer/Console2" method="clear_console"]
+[connection signal="pressed" from="HBoxContainer2/HBoxContainer/VBoxContainer3/Console3Toggle" to="HBoxContainer2/HBoxContainer/Console3" method="_toggle_console_visibility"]
+[connection signal="pressed" from="HBoxContainer2/HBoxContainer/VBoxContainer3/Console3ToggleCLI" to="HBoxContainer2/HBoxContainer/Console3" method="_toggle_cli_visibility"]
+[connection signal="pressed" from="HBoxContainer2/HBoxContainer/VBoxContainer3/Console3Clear" to="HBoxContainer2/HBoxContainer/Console3" method="clear_console"]

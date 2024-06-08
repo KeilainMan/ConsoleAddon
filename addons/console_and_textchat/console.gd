@@ -4,10 +4,13 @@ class_name ConsoleAndTextchat
 
 
 ## NODE DEPENDENCIES ##
-
 @onready var text_input_line: LineEdit
 @onready var display_label: RichTextLabel
 
+## PRIVATE VARIABLES ##
+@onready var all_commands: Array[Dictionary] = []
+@onready var command_history: Array[String] = []
+@onready var command_history_index: int = -1
 
 ## EXPORTS ##
 @export var minimum_size: Vector2 = Vector2(300,335):
@@ -16,7 +19,10 @@ class_name ConsoleAndTextchat
 		size = new_size
 		_adjust_display_size(new_size)
 		_adjust_text_input_size(new_size)
-var all_commands: Array[Dictionary] = []
+@export var cli_history_preview_theme: Theme = null
+@export var cli_history_default_theme: Theme = null
+@export var disable_cli: bool = false
+@export var disable_key_enter_focus: bool = false
 
 
 ####################################################################################################
@@ -27,9 +33,9 @@ func _ready():
 	_build_console()
 	set("minimum_size", size)
 	_register_premade_commands()
-
+	_handle_cli_themes()
+	_handle_cli_visibility()
 	resized.connect(_on_text_window_resized)
-
 
 
 func _build_console() -> void:
@@ -79,9 +85,34 @@ func _instance_and_setup_text_input(parent: VBoxContainer) -> void:
 ####################################################################################################
 ## CONSOLE OUTPUT ##
 
-func print_message(text: String) -> void:
+func print_message(text: String, codeblock_replacement = true) -> void:
+	var modified_text = text
+	if codeblock_replacement:
+		var regex = RegEx.new()
+		regex.compile(r"`([^`]*)`")
+		modified_text = ""
+		var start_position = 0
+		
+		while true:
+			var result = regex.search(text, start_position)
+			if result == null:
+				break
+		
+			# Add text before the match
+			modified_text += text.substr(start_position, result.get_start() - start_position)
+			
+			# Add the replaced match
+			modified_text += underline(bold(result.get_string(1)))
+			
+			# Update start position
+			start_position = result.get_end()
+
+		# Add the remaining text after the last match
+		modified_text += text.substr(start_position, text.length() - start_position)
+
 	display_label.text += "\n"
-	display_label.text += text
+	display_label.text += modified_text
+
 
 
 func _on_false_command_entered() -> void:
@@ -94,6 +125,8 @@ func _on_missing_command_arguments() -> void:
 
 func clear_console() -> void:
 	display_label.text = ""
+
+
 ####################################################################################################
 ## INPUT ##
 
@@ -106,21 +139,77 @@ func _input(event: InputEvent) -> void:
 	
 	#grab focus of text input line
 	if event is InputEventKey:
-		if event.pressed == true and event.physical_keycode == KEY_ENTER \
+		if event.pressed == true and not disable_key_enter_focus and event.physical_keycode == KEY_ENTER \
 		and self.visible and !text_input_line.has_focus():
 			text_input_line.grab_focus()
+
+	# navigate command history with Shift + Arrow keys
+	if event is InputEventKey and text_input_line.has_focus():
+		if event.shift_pressed and event.pressed:
+			if event.physical_keycode == KEY_UP:
+				_show_previous_command()
+			elif event.physical_keycode == KEY_DOWN:
+				_show_next_command()
 
 
 func _on_text_input_line_text_submitted(new_text: String) -> void:
 	if new_text == "":
 		return
+	_save_command_to_history(new_text)
 	if _input_is_command(new_text):
 		_proceed_command(new_text)
 	else:
 		print_message(new_text)
 
-	text_input_line.text = ""
+	_clear_cli_text()
+	
+	
+####################################################################################################
+## COMMAND HISTORY ##
 
+
+func _save_command_to_history(command: String) -> void:
+	command_history.append(command)
+	command_history_index = -1  # Reset index
+
+
+func _show_previous_command() -> void:
+	if command_history.size() == 0:
+		return
+		
+	if command_history_index == -1:
+		command_history_index = command_history.size() - 1
+	elif command_history_index > 0:
+		command_history_index -= 1
+		
+	_set_preview_text(command_history[command_history_index])
+
+
+func _show_next_command() -> void:
+	if command_history.size() == 0:
+		return
+
+	if command_history_index == -1:
+		return
+	elif command_history_index == 0:
+		text_input_line.theme = cli_history_default_theme
+
+	if command_history_index < command_history.size() - 1:
+		command_history_index += 1
+		_set_preview_text(command_history[command_history_index])
+	else:
+		command_history_index = -1
+		_clear_cli_text()
+
+
+func _set_preview_text(text: String) -> void:
+	text_input_line.text = text
+	text_input_line.theme = cli_history_preview_theme
+	
+	
+func _clear_cli_text() -> void:
+	text_input_line.text = ""
+	text_input_line.theme = cli_history_default_theme
 
 ####################################################################################################
 ## COMMANDS LOGIC##
@@ -192,6 +281,7 @@ func timestamp() -> String:
 ################################################################################
 ## TEXT FORMATTING ##
 
+
 func col(color, text: String) -> String:
 	var col: String
 	if color is String:
@@ -243,6 +333,33 @@ func _adjust_text_input_size(new_size: Vector2) -> void:
 
 
 ################################################################################
+## Themes ##
+
+
+func _handle_cli_themes() -> void:
+	if cli_history_default_theme and not cli_history_preview_theme:
+		# default theme provided but no preview
+		cli_history_preview_theme = _override_preview_theme(cli_history_default_theme.duplicate(true))
+	elif not cli_history_default_theme and cli_history_preview_theme:
+		# no default theme provided but did get a preview theme
+		cli_history_default_theme = _create_default_theme()	
+	elif not cli_history_default_theme and not cli_history_preview_theme:
+		# nothing was provided set defaults
+		cli_history_default_theme = _create_default_theme()
+		cli_history_preview_theme = _override_preview_theme(cli_history_default_theme.duplicate(true))
+
+
+func _create_default_theme() -> Theme:
+	return Theme.new()
+
+
+func _override_preview_theme(base_theme: Theme):
+	base_theme.set_color("font_color", "LineEdit", Color.SALMON)
+	base_theme.set_color("selection_color", "LineEdit", Color.SALMON)
+	return base_theme
+
+
+################################################################################
 ## REGISTERED COMMANDS ##
 
 
@@ -260,10 +377,13 @@ func _toggle_console_visibility() -> void:
 		self.show()
 		return
 
+func _toggle_cli_visibility() -> void:
+	disable_cli = !disable_cli
+	_handle_cli_visibility()
 
-################################################################################
-## DUMMY ##
+func _handle_cli_visibility() -> void:
+	if disable_cli:
+		text_input_line.hide()
+	else:
+		text_input_line.show()
 
-
-func _dummy() -> void:
-	return
