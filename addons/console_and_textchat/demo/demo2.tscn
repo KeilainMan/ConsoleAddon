@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://chdiv2yjxfywo"]
+[gd_scene load_steps=9 format=3 uid="uid://bx0oypf147o6y"]
 
 [ext_resource type="Script" path="res://addons/console_and_textchat/demo/demo2.gd" id="1_bgeg0"]
 [ext_resource type="Script" path="res://addons/console_and_textchat/console.gd" id="2_8evco"]

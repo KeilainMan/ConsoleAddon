@@ -12,3 +12,5 @@ offset_bottom = 335.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_we1j5")
+disable_cli = null
+disable_key_enter_focus = null
