@@ -1,25 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bx0oypf147o6y"]
+[gd_scene load_steps=3 format=3 uid="uid://bx0oypf147o6y"]
 
 [ext_resource type="Script" path="res://addons/console_and_textchat/demo/demo2.gd" id="1_bgeg0"]
 [ext_resource type="Script" path="res://addons/console_and_textchat/console.gd" id="2_8evco"]
-
-[sub_resource type="Theme" id="Theme_2lh5a"]
-LineEdit/colors/font_color = Color(0.980392, 0.501961, 0.447059, 1)
-LineEdit/colors/selection_color = Color(0.980392, 0.501961, 0.447059, 1)
-
-[sub_resource type="Theme" id="Theme_ft0af"]
-
-[sub_resource type="Theme" id="Theme_jiqs6"]
-LineEdit/colors/font_color = Color(0.980392, 0.501961, 0.447059, 1)
-LineEdit/colors/selection_color = Color(0.980392, 0.501961, 0.447059, 1)
-
-[sub_resource type="Theme" id="Theme_kduk3"]
-
-[sub_resource type="Theme" id="Theme_4atdj"]
-LineEdit/colors/font_color = Color(0.980392, 0.501961, 0.447059, 1)
-LineEdit/colors/selection_color = Color(0.980392, 0.501961, 0.447059, 1)
-
-[sub_resource type="Theme" id="Theme_1in1u"]
 
 [node name="Demo2" type="Node"]
 script = ExtResource("1_bgeg0")
@@ -52,9 +34,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_8evco")
 minimum_size = Vector2(1004, 455)
-cli_history_preview_theme = SubResource("Theme_2lh5a")
-cli_history_default_theme = SubResource("Theme_ft0af")
-disable_cli = true
+history_preview_color = Color(0.991436, 0.471547, 0.586184, 1)
+disable_text_input_line = null
 disable_key_enter_focus = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
@@ -93,8 +74,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_8evco")
 minimum_size = Vector2(417, 190)
-cli_history_preview_theme = SubResource("Theme_jiqs6")
-cli_history_default_theme = SubResource("Theme_kduk3")
+history_preview_color = Color(0.991436, 0.471547, 0.586184, 1)
+disable_text_input_line = null
 disable_key_enter_focus = true
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer2/HBoxContainer"]
@@ -119,8 +100,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_8evco")
 minimum_size = Vector2(417, 190)
-cli_history_preview_theme = SubResource("Theme_4atdj")
-cli_history_default_theme = SubResource("Theme_1in1u")
+history_preview_color = Color(0.991436, 0.471547, 0.586184, 1)
+disable_text_input_line = null
 disable_key_enter_focus = true
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer2/PrimaryToggle" to="HBoxContainer/PrimaryConsole" method="_toggle_console_visibility"]
